@@ -5,6 +5,7 @@ A Chinese Pop music database with 200 Chinese pop songs includes twenty most pop
 Besides the chord progression information, the database also contains the name, ranking year, singer, beat, original key, and the data key of a song. To keep the consistency of the data information, all chord progressions are recorded in major keys.
 The top 20 song information is shown as below:
 ![image](https://github.com/JiayingLi0803/harmonicSimilarityProject_2022/blob/main/Images/data_information.png)
+
 The top 10 song information is shown as below:
 ![image](https://github.com/JiayingLi0803/harmonicSimilarityProject_2022/blob/main/Images/top10data.png)
 ## Chord Progression Similarity Index Based on the Markov Model

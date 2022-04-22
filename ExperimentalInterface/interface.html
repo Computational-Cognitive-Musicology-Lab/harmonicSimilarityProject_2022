@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chord Progression Similarity</title>
+    <script src="jsPsych/dist/jspsych.js"></script>
+    <script src="jsPsych/dist/plugin-audio-slider-response.js"></script>
+    <script src="jsPsych/dist/plugin-survey-multi-select.js"></script>
+    <script src="jsPsych/dist/plugin-survey-likert.js"></script>
+    <script src="jsPsych/dist/plugin-survey-text.js"></script>
+    <script src="jsPsych/dist/plugin-html-button-response.js"></script>
+    <script src="jsPsych/dist/plugin-survey-multi-choice.js"></script>
+    <script src="jsPsych/dist/plugin-survey-html-form.js"></script>
+    <link href="jsPsych/dist/jspsych.css" rel="stylesheet" type="text/css"></link>
+  </head>
+  <body> </body>
+  <script>
+    function saveData(name, data){
+      var time = Date.now();
+      var date = new Date(time);
+      var timestamp = date.toLocaleDateString();
+      timestamp = timestamp.replaceAll('/', '-') + "_" + date.getHours() + ":" + date.getMinutes();
+      console.log(timestamp);
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'write_data.php'); // 'write_data.php' is the path
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify({filename: name + timestamp, filedata: data}));
+     };
+
+    var jsPsych = initJsPsych({
+      show_progress_bar: true,
+		auto_update_progress_bar: false,
+      preload_audio: audio_filenames,
+    });
+
+    var consent = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus:  '<h1 class="title">Consent Form</h1> </header> <p><img src="gatechlogo.png" height="60" /> <img src="LabLogo_BlackandWhite.png" height="60" /></p> <p>Thank you for your interest in our research study. This research will help us better understand how musical <em>chord progressions</em> work in popular and classical music. This study is intended for people familiar with Western classical music, jazz, or modern popular music from the USA, China, Japan, or Korea. If you feel like you are not really familiar with any of these musical genres, this study is probably not right for you.</p> <p>The study should take approximately 20–30 minutes to complete. Your participation in this study is always voluntary and you may discontinue your participation at any time.</p> <h4 id="ethics">Ethics:</h4> <p>This study has been reviewed by the Georgia Tech Institutional Review Board, and has been identified as ‘Minimal risk research’ (Ethics ID #HXXXX). The risks of participating in this study are no greater than any casual music listening or other normal daily activities.</p> <h4 id="confidentiality">Confidentiality:</h4> <p>We will comply with any applicable laws and regulations regarding confidentiality. Your responses to the study questions will be entirely anonymous and confidential. No personal data will be gathered from you, and your identity will never be associated with your data, published, or disclosed in any way.</p> <p>To make sure that this research is being carried out in the proper way, the Georgia Institute of Technology IRB may review study records. The Office of Human Research Protections may also look at study records. Your anonymous responses may also be shared with other scientists for use in other research.</p> <h4 id="compensation">Compensation:</h4> <p>You will not directly benefit from or be compensated for participating in this study.</p> <h4 id="contacts-and-questions">Contacts and Questions:</h4> <p>For questions, concerns, or complaints about the study, you may contact the Principal Investigator, Dr. Nathaniel Condit-Schultz at: natcs[at]gatech.edu or by telephone (404)-904-1112. If you have any questions about your rights as a research subject, you may contact Ms. Melanie Clark, Georgia Institute of Technology at (404)-894-6942.</p> <hr /> <p>Only adults (18 years or older) who are <em>not</em> located in the EU are eligible to participate in this study. <strong>By clicking below and completing the study you are agreeing to participate.</strong> You do <em>not</em> waive any of your legal rights by agreeing to participate.</p>',
+      choices: ["I agree. Begin the study."]
+    };
+
+
+
+    var demographics = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: "Before we begin, please tell us a little about yourself:",
+      html: '<p><b>Age</b>: <input type="number" min="18" max="120" id="part_age" name="part_age"/></p>' +
+            '<p><b>Gender</b>: <input type="text" id="part_age" name="part_age"/></p>',
+		on_finish: function() {
+        jsPsych.setProgressBar(.01);
+		}
+    };
+	 var genres = {
+		type: jsPsychSurveyMultiSelect,
+      preamble: "<b>Which (if any) of these musical genres are familiar to you?</b> (Meaning you have listened to them many times before.)",
+		questions: [
+                   {prompt: "<b>Western music</b>:", options: ["Classical", "Pop", "Rock", "Jazz"],  horizontal: true, required: false, name: "WesternGenres"},
+                   {prompt: "<b>Chinese music</b>:", options: ["Classical", "Tradiational", "Pop", "Rock"],  horizontal: true, required: false, name: "ChineseGenres"},
+                   {prompt: "<b>Japanese music</b>:", options: ["Classical", "Traditional", "Pop", "Rock"],  horizontal: true, required: false, name: "JapaneseGenres"},
+                   {prompt: "<b>Korean music</b>:", options: ["Classical", "Traditional", "Pop", "Rock"],  horizontal: true, required: false, name: "KoreanGenres"},
+                   {prompt: "<b>Indian music</b>:", options: ["Classical (Hindustani)", "Classical (Carnatic)", "Pop", "Rock"],  horizontal: true, required: false, name: "IndianGenres"}],
+	 };
+    var experience = {
+      type: jsPsychSurveyMultiChoice, 
+      preamble: "<b>Next, tell us a little bit about your musical experiences. Complete the following statements:</b>",
+      questions: [
+                   {prompt: "I engaged in regalar practice on a musical instrument (or singing) for ___ years.",
+                   options: ["0", "1-2", "3-5", "5-10", "11+"],
+                   horizontal: true, required: true, name: "Instrument"},
+                   {prompt: "If so, at least one of the instruments I play can be an accompaniment instrument which can play chords, like the guitar or piano.",
+                   options: ["Yes", "No"],
+                   horizontal: true, required: false, name: "ChordalInstrument"},
+                   {prompt: "I have had formal training which covers music theory (for example, music theory classes) for ___ years.",
+                   options: ["0", "1", "2", "3-4", "5+"],
+                   horizontal: true, required: true, name: "MusicTheory"},
+                   {prompt: "I am familar with traditional theory/terminology for chords, such as 'major triad' and 'dominant 7th chord'.",
+                   options: ["True", "False"],
+                   horizontal: true, required: true, name: "ChordTheory"},
+                 ],
+		on_finish: function() {
+        jsPsych.setProgressBar(.04);
+		}
+    };
+
+    var instructions = {
+       type: jsPsychHtmlButtonResponse, 
+      stimulus: '<h1>Instructions</h1> <p>In this experiment you will listen to xxx pairs of chord progressions. Each “chord progression” is a sequence of four musical chords, at a regular pace. In each trial, you will hear a <em>first</em> chord progression played twice, followed by a short pause, followed by a <em>second</em> chord progression played twice:</p> <p><img src="Diagram.png" /></p> <p>In some cases, the first and second chord progressions will be very similar, or even exactly the same. In other cases, they might be very different. Your goal is to judge how similar <em>you</em> think they sound, and tell us using the slider.</p> <p>If you think the two chord progressions sound exactly the same, set the slider to 0 (far left). If you think they sound really dramatically different, you could set the slider towards 100 (far right).</p> <p>Once you’ve set the slider, click the “submit” button to move on. After you click “submit,” there will be a short pause, then the next pair of progressions will play.</p> <p>Please do not navigate away or refresh the page, as you will have to start over from scratch.</p>',
+      choices: ["I'm ready to start the experiment."],
+		on_finish: function() {
+        jsPsych.setProgressBar(.05);
+		}
+    };
+
+
+
+
+var audio_files = [{file: "Dorian Probe.wav"}];
+var audio_filenames = ["Dorian Probe.wav"];
+
+console.log(audio_files);
+
+    var maintrial = {
+      type: jsPsychAudioSliderResponse,
+      labels: ["Totally Similar", "Totally  Dissimilar"],
+      button_label: "Continue",
+      prompt: "<p>How similar are these two chord progressions?</p>",
+      stimulus: jsPsych.timelineVariable("file"),
+		response_allowed_while_playing: false,
+	   require_movement: true,
+      post_trial_gap: function() {jsPsych.randomization.sampleNormal(1000, 100);},
+ 	   on_finish: function() {
+        var curr_progress_bar_value = jsPsych.getProgressBarCompleted();
+        jsPsych.setProgressBar(curr_progress_bar_value + (1/50)*.95);
+    }
+    };
+
+    var mainblock = {
+      timeline: [maintrial],
+      timeline_variables: audio_files,
+      randomize_order: true,
+      }
+    
+
+
+
+
+    var thanks = {
+      type: jsPsychSurveyText,
+      questions:  [{rows:10, columns:40, prompt:"<p>Thanks for all your hard work! You are done!</p> <p>If you have <em>any</em> comments about the experiment, please write them in below. We'd be particularly interested in hearing what strategies you used to do this task&mdash;what did you listen for to make your decisions? What factors made chord progressions sound more dissimilar? Etc.</p>"}],
+		preamble: "Thank you!",
+      button_label: ["Continue."],
+      on_start: function() {saveData("Rhyme", jsPsych.data.get().csv()); console.log("Finished");},
+    };
+
+    var debrief = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus:  "<p><img src='gatechlogo.png' height='120' /> <img src='LabLogo_BlackandWhite.png' height='200' /></p> <p>Thanks again!</p> <p>By participating in this research, you'll be helping us what makes chord progressions sound different.</p>",
+      choices: ["I'm done."],
+      on_start: function() {saveData("Rhyme", jsPsych.data.get().csv()); console.log("Finished");},
+    };
+
+
+
+
+
+
+
+    /* start the experiment */
+	 jsPsych.run([consent, demographics, genres, experience, instructions, mainblock, thanks, debrief]);
+  </script>
+</html>

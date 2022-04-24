@@ -8,6 +8,7 @@ Besides the chord progression information, the database also contains the name, 
 + Sampling Source: Chinese hottest search top20 popular music in past 10 years (200 songs in total)
 + Data Content: Song Name, Singer, Beat, key (song key & data key), chord progression groups
 + Creator: Jiaying Li, 2022/03/23
+
 The top 20 song information is shown as below:
 ![image](https://github.com/JiayingLi0803/harmonicSimilarityProject_2022/blob/main/Images/data_information.png)
 

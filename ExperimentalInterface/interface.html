@@ -142,7 +142,7 @@
       button_label: "Continue",
       prompt: "<p>How similar are these two chord progressions?</p>",
       stimulus: jsPsych.timelineVariable("file"),
-      response_allowed_while_playing: true,
+      response_allowed_while_playing: false,
       require_movement: true,
       post_trial_gap: function() {jsPsych.randomization.sampleNormal(1000, 100);},
       on_finish: function() {
@@ -173,7 +173,7 @@
   };
 
   /* start the experiment */
-	// jsPsych.run([consent, demographics, genres, experience, instructions, mainblock, thanks, debrief]);
-   jsPsych.run([instructions, mainblock, thanks, debrief]);
+	 jsPsych.run([consent, demographics, genres, experience, instructions, mainblock, thanks, debrief]);
+   // jsPsych.run([instructions, mainblock, thanks, debrief]);
   </script>
 </html>

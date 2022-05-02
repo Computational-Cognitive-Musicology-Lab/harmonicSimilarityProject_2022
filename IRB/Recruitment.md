@@ -1,7 +1,7 @@
 Hi `___`
 
 We are looking for volunteers to participate in an online experiment we are conducting concerning chord progressions in popular music.
-This study is open to any adult (18 years or older) who is *not* currently located in the European Union.
+This study is open to any adult (18 years or older).
 We'd love it if you would be willing to help us out!
 The study should only take about 20--30 minutes of your time.
 Unfortunately, there would be no compensation to you, other than the good feeling of helping science!

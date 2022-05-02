@@ -43,7 +43,7 @@ If you have any questions about your rights as a research subject, you may conta
 
 ----
 
-Only adults (18 years or older) who are *not* located in the EU are eligible to participate in this study.
+Only adults (18 years or older) are eligible to participate in this study.
 **By clicking below and completing the study you are agreeing to participate.**
 You do *not* waive any of your legal rights by agreeing to participate. 
 

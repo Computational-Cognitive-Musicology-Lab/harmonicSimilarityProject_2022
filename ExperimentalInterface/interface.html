@@ -162,14 +162,14 @@
     questions:  [{rows:10, columns:40, prompt:"<p>Thanks for all your hard work! You are done!</p> <p>If you have <em>any</em> comments about the experiment, please write them in below. We'd be particularly interested in hearing what strategies you used to do this task&mdash;what did you listen for to make your decisions? What factors made chord progressions sound more dissimilar? Etc.</p>"}],
     preamble: "Thank you!",
     button_label: ["Continue."],
-    on_start: function() {saveData("Rhyme", jsPsych.data.get().csv()); console.log("Finished");},
+    on_start: function() {saveData("Chords", jsPsych.data.get().csv()); console.log("Finished");},
   };
 
   var debrief = {
     type: jsPsychHtmlButtonResponse,
     stimulus:  "<p><img src='gatechlogo.png' height='120' /> <img src='LabLogo_BlackandWhite.png' height='200' /></p> <p>Thanks again!</p> <p>By participating in this research, you'll be helping us what makes chord progressions sound different.</p>",
     choices: ["I'm done."],
-    on_start: function() {saveData("Rhyme", jsPsych.data.get().csv()); console.log("Finished");},
+    on_start: function() {saveData("Chords", jsPsych.data.get().csv()); console.log("Finished");},
   };
 
   /* start the experiment */

@@ -52,6 +52,9 @@
     var genres = {
       type: jsPsychSurveyMultiSelect,
         preamble: "<b>Which (if any) of these musical genres are familiar to you?</b> (Meaning you have listened to them many times before.)",
+		on_finish: function() {
+        jsPsych.setProgressBar(.02);
+		  },
       questions: [
                     {prompt: "<b>Western music</b>:", options: ["Classical", "Pop", "Rock", "Jazz"],  horizontal: true, required: false, name: "WesternGenres"},
                     {prompt: "<b>Chinese music</b>:", options: ["Classical", "Tradiational", "Pop", "Rock"],  horizontal: true, required: false, name: "ChineseGenres"},
@@ -72,21 +75,21 @@
                    {prompt: "I have had formal training which covers music theory (for example, music theory classes) for ___ years.",
                    options: ["0", "1", "2", "3-4", "5+"],
                    horizontal: true, required: true, name: "MusicTheory"},
-                   {prompt: "I am familar with traditional theory/terminology for chords, such as 'major triad' and 'dominant 7th chord'.",
+                   {prompt: "I am familar with traditional terminology for chords, such as 'major triad' and 'dominant 7th chord'.",
                    options: ["True", "False"],
                    horizontal: true, required: true, name: "ChordTheory"},
                  ],
 		on_finish: function() {
-        jsPsych.setProgressBar(.04);
+        jsPsych.setProgressBar(.03);
 		  }
     };
 
     var instructions = {
        type: jsPsychHtmlButtonResponse, 
-      stimulus: '<h1>Instructions</h1> <p>In this experiment you will listen to 40 pairs of chord progressions. Each "chord progression" is a sequence of four, five, or six musical chords, played at a regular pace. In each trial, you will hear a <em>first</em> chord progression played twice, followed by a short pause, followed by a <em>second</em> chord progression played twice:</p> <p><img src="Diagram.svg" style="width:800px;" /></p> <p>In some cases, the first and second chord progressions will be very similar, or even exactly the same. In other cases, they might be very different. Your goal is to judge how similar <em>you</em> think they sound, and tell us using the slider.</p> <p>If you think the two chord progressions sound exactly the same, set the slider to the far left position. If you think they sound really dramatically different, you could set the slider towards the far right.</p> <p>Once you\'ve set the slider, click the "submit" button to move on. After you click "submit," there will be a short pause, then the next pair of progressions will play.</p> <p>Please do not navigate away or refresh the page, as you will have to start over from scratch.</p>',
+      stimulus: '<h1>Instructions</h1> <p>In this experiment you will listen to 40 pairs of chord progressions. Each "chord progression" is a sequence of four, five, or six musical chords, played at a regular pace. In each trial, you will hear a <em>first</em> chord progression played twice, followed by a short pause, followed by a <em>second</em> chord progression played twice:</p> <p><img src="Diagram.svg" style="width:800px;" /></p> <p>In some cases, the first and second chord progressions will be very similar, or even exactly the same. In other cases, they might be very different. Your goal is to judge how similar <em>you</em> think they sound, and tell us using the slider. There are no "right answer"&mdash;we want to know <em>your</em> intuitive judgements!</p> <p>If you think the two chord progressions sound exactly the same, set the slider to the far left position. If you think they sound really dramatically different, you could set the slider towards the far right. We encourage you to <em>not</em> base your judgements entirely on counting how many chords are the same or different in the progressions&mdash;rather, think about the overall musicality of the progressions and ask yourself "how similar would music using these two progressions feel?".</p> <p>Once you\'ve set the slider, click the "Continue" button to move on. After you click "Continue," there will be a short pause, then the next pair of progressions will play.</p> <p>Please do not navigate away or refresh the page, as you will have to start over from scratch.</p>',
       choices: ["I'm ready to start the experiment."],
 		on_finish: function() {
-        jsPsych.setProgressBar(.05);
+        jsPsych.setProgressBar(.04);
 		}
     };
 
@@ -135,12 +138,11 @@
 
 
     console.log(audio_files);
-
     var maintrial = {
       type: jsPsychAudioSliderResponse,
-      labels: ["Totally Similar", "Totally  Dissimilar"],
+      labels: ["Totally Similar", "Very Similar", "Somewhat Similar", "Somewhat Dissimilar", "Very Dissimilar", "Extremely Dissimilar"],
       button_label: "Continue",
-      prompt: "<p>How similar are these two chord progressions?</p>",
+      prompt: "<p>In your overall judgement, how similar are these two chord progressions?</p>",
       stimulus: jsPsych.timelineVariable("file"),
       response_allowed_while_playing: false,
       require_movement: true,
@@ -148,7 +150,7 @@
       post_trial_gap: function() {jsPsych.randomization.sampleNormal(1000, 100);},
       on_finish: function() {
       var curr_progress_bar_value = jsPsych.getProgressBarCompleted();
-      jsPsych.setProgressBar(curr_progress_bar_value + (1/50)*.95);
+      jsPsych.setProgressBar(curr_progress_bar_value + (1/40)*.95);
       }
     };
 
@@ -160,17 +162,20 @@
    
   var thanks = {
     type: jsPsychSurveyText,
-    questions:  [{rows:10, columns:40, prompt:"<p>Thanks for all your hard work! You are done!</p> <p>If you have <em>any</em> comments about the experiment, please write them in below. We'd be particularly interested in hearing what strategies you used to do this task&mdash;what did you listen for to make your decisions? What factors made chord progressions sound more dissimilar? Etc.</p>"}],
+    questions:  [{rows:10, columns:40, prompt:"<p>Thanks for all your hard work! You are done!</p> <p>If you have <em>any</em> comments about the experiment, please write them below. We'd be particularly interested in hearing what strategies you used to do this task&mdash;what did you listen for to make your decisions? What factors made chord progressions sound more dissimilar or similar? Etc.</p>"}],
     preamble: "Thank you!",
     button_label: ["Continue."],
-    on_start: function() {saveData("Chords", jsPsych.data.get().csv()); console.log("Finished");},
+    on_start: function() {saveData("Chords_thanks_", jsPsych.data.get().csv()); console.log("Finished");},
+	 on_finish: function() {
+        jsPsych.setProgressBar(1);
+ 	 }
   };
 
   var debrief = {
     type: jsPsychHtmlButtonResponse,
     stimulus:  "<p><img src='gatechlogo.png' height='120' /> <img src='LabLogo_BlackandWhite.png' height='200' /></p> <p>Thanks again!</p> <p>By participating in this research, you'll be helping us what makes chord progressions sound different.</p>",
     choices: ["I'm done."],
-    on_start: function() {saveData("Chords", jsPsych.data.get().csv()); console.log("Finished");},
+    on_start: function() {saveData("Chords_final_", jsPsych.data.get().csv()); console.log("Finished");},
   };
 
   /* start the experiment */

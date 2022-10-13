@@ -23,3 +23,6 @@ The top 10 song information is shown as below:
 ## Chord Progression Similarity Index Based on the Markov Model
 In `python_analysis` folder, `similarity_index_calculation.py` can be used to calculate the similarity index based on the Morkov Model. 
 Data analysis of top 10 and top 20 songs can be viewed in `python_analysis` folder.
+
+## Perceptual Experience
+Experiment design can be found in `ExperimentalInterface` and `Questionnaire` folders. Experiment data analysis can be found in `python_analysis` folder.

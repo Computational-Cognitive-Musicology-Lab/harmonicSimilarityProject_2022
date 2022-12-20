@@ -40,4 +40,10 @@ Another important thing to consider is how well the similarity index calculated 
 ## Perceptual Experience
 Experiment design can be found in `ExperimentalInterface` and `Questionnaire` folders. Experiment data analysis can be found in `python_analysis` folder.
 
-The link for the perceptual experiment can be found ![here](https://ccml.gtcmt.gatech.edu/ChordSimilarity/interface.html).
+The link for the perceptual experiment can be found [here](https://ccml.gtcmt.gatech.edu/ChordSimilarity/interface.html).
+
+## Several Important Conclusions
+1. The leading chord in a chord progression has twice the importance compared to other chords according to our data analysis;
+2. The data analysis showed that there are significant differences if we change the chord type in a chord progression, for example, replacing triads with seventh chords;
+3. Most people consider the chord progressions different if we shuffle the order of chords in a chord progression, no matter if it’s still the same loop starting from different chords or it’s a different loop. 
+
